@@ -1,3 +1,18 @@
 {
-  "extends": "@react-native/typescript-config"
+  "extends": "@react-native/typescript-config",
+  // "compilerOptions": {
+  //   "strict": true,
+  //   "jsx": "react-native",
+  //   "esModuleInterop": true,
+  //   "lib": [
+  //     "esnext",
+  //     "dom"
+  //   ],
+  //   "types": [
+  //     "react-native",
+  //     "jest"
+  //   ],
+  //   "skipLibCheck": true,
+  //   "moduleResolution": "bundler"
+  // }
 }

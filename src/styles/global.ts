@@ -55,25 +55,23 @@ const styling: NamedStyles<any> & Record<string, any> = {
   borderLight: { borderColor: _light },
 
   inputBox: {
-    width: '80%',
+    width: '100%',
+    minWidth: 200,
     padding: 8,
-    marginVertical: 10,
     paddingLeft: 10,
-    borderWidth: 1,
-    flexDirection: 'row',
+    marginVertical: 10,
     fontSize: 16,
-    alignItems: 'center',
     backgroundColor: '#fff',
     borderColor: 'grey',
+    borderWidth: 1,
+    borderRadius: 4,
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
   },
+
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',

@@ -86,12 +86,32 @@ android {
         versionName "1.0"
     }
     signingConfigs {
-        debug {
+         debug {
             storeFile file('debug.keystore')
             storePassword 'android'
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+                storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias MYAPP_UPLOAD_KEY_ALIAS
+                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+            } else {
+                // Fallback for local builds if properties are not set
+                storeFile file('my-release-key.keystore')
+                storePassword 'Password!123'
+                keyAlias 'my-key-alias'
+                keyPassword 'Password!123'
+            }
+        }
+        // if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+        //         storeFile file(MYAPP_UPLOAD_STORE_FILE)
+        //         storePassword MYAPP_UPLOAD_STORE_PASSWORD
+        //         keyAlias MYAPP_UPLOAD_KEY_ALIAS
+        //         keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+        //     }
     }
     buildTypes {
         debug {
@@ -108,7 +128,7 @@ android {
 }
 
 dependencies {
-    // The version of react-native is set by the React Native Gradle Plugin
+    // React Native dependencies
     implementation("com.facebook.react:react-android")
 
     if (hermesEnabled.toBoolean()) {
@@ -116,4 +136,12 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    // ✅ Firebase BoM
+    implementation platform("com.google.firebase:firebase-bom:33.15.0")
+
+    // You can add more Firebase SDKs here (e.g., auth, firestore, messaging, etc.)
 }
+
+// ✅ Apply the Google Services plugin at the very end
+apply plugin: "com.google.gms.google-services"

@@ -6,6 +6,7 @@ import Settings from '../screens/Settings';
 import Schedule from '../screens/Schedule';
 import Manual from '../screens/Manual';
 import Calibrate from '../screens/Calibrate';
+import StoredDataScreen from '../screens/StoredData';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ const AppNavigator = () => {
         <Stack.Screen name="Schedule" component={Schedule} />
         <Stack.Screen name="Manual" component={Manual} />
         <Stack.Screen name="Calibrate" component={Calibrate} />
+        <Stack.Screen name="StoredData" component={StoredDataScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

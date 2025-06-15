@@ -1,61 +1,49 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-} from 'react-native';
+import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import styles from '../styles/global';
-import CuButton from '../components/CuButton';
-
-type RootStackParamList = {
-  Home: undefined;
-  Settings: { onSubmit: (page: string, data: any) => void };
-  Schedule: { onSubmit: (page: string, data: any) => void };
-  Manual: { onSubmit: (page: string, data: any) => void };
-  Calibrate: { onSubmit: (page: string, data: any) => void };
-};
+import { RootStackParamList } from '../types/types';
+import CuFormScreen from '../components/CuFormScreen';
 
 type ScheduleProps = NativeStackScreenProps<RootStackParamList, 'Schedule'>;
 
 const Schedule: React.FC<ScheduleProps> = ({ navigation, route }) => {
-  const [dosesPerDay, setDosesPerDay] = useState<string>('');
-  const [volumePerDay, setVolumePerDay] = useState<string>('');
-
-  const handleSave = () => {
-    const data = {
-      dosesPerDay: Number(dosesPerDay) || 0,
-      volumePerDay: Number(volumePerDay) || 0,
-    };
-    route.params?.onSubmit('Schedule', data);
-    navigation.goBack();
-  };
-
   return (
-    <View style={styles.container} >
-      <Text style={styles.label}>Doses Per Day</Text>
-      <TextInput
-        style={styles.inputBox}
-        value={dosesPerDay}
-        onChangeText={setDosesPerDay}
-        keyboardType="numeric"
-        placeholder="Enter doses per day"
-      />
-      <Text style={styles.label}>Volume Per Day (ml)</Text>
-      <TextInput
-        style={styles.inputBox}
-        value={volumePerDay}
-        onChangeText={setVolumePerDay}
-        keyboardType="numeric"
-        placeholder="Enter volume per day"
-      />
-      <View style={styles.buttonContainer}>
-        <CuButton label='Save' onPress={handleSave} />
-        <CuButton label='Back' onPress={() => navigation.goBack()} />
-      </View>
-    </View>
+    <CuFormScreen
+      title="Schedule"
+      fields={[
+        {
+          label: 'Doses Per Day',
+          key: 'dosesPerDay',
+          placeholder: 'Enter doses per day',
+          type: 'numeric',
+        },
+        {
+          label: 'Volume Per Day (ml)',
+          key: 'volumePerDay',
+          placeholder: 'Enter volume per day',
+          type: 'numeric',
+        },
+      ]}
+      initialValues={{
+        dosesPerDay:
+          route.params?.dosesPerDay && route.params.dosesPerDay !== 0
+            ? route.params.dosesPerDay.toString()
+            : '',
+        volumePerDay:
+          route.params?.volumePerDay && route.params.volumePerDay !== 0
+            ? route.params.volumePerDay.toString()
+            : '',
+      }}
+      submitBtnLabel="Save"
+      onSubmit={(data) => {
+        route.params?.onSubmit('Schedule', {
+          dosesPerDay: Number(data.dosesPerDay) || 0,
+          volumePerDay: Number(data.volumePerDay) || 0,
+        });
+        navigation.goBack();
+      }}
+      onBack={() => navigation.goBack()}
+    />
   );
 };
-
 
 export default Schedule;

@@ -1,64 +1,47 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
-  TextStyle,
-} from 'react-native';
+import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import styles from '../styles/global';
-import CuButton from '../components/CuButton';
-
-type RootStackParamList = {
-  Home: undefined;
-  Settings: { onSubmit: (page: string, data: any) => void };
-  Schedule: { onSubmit: (page: string, data: any) => void };
-  Manual: { onSubmit: (page: string, data: any) => void };
-  Calibrate: { onSubmit: (page: string, data: any) => void };
-};
+import { RootStackParamList } from '../types/types';
+import CuFormScreen from '../components/CuFormScreen';
 
 type SettingsProps = NativeStackScreenProps<RootStackParamList, 'Settings'>;
 
 const Settings: React.FC<SettingsProps> = ({ navigation, route }) => {
-  const [pumpName, setPumpName] = useState<string>('');
-  const [containerSize, setContainerSize] = useState<string>('');
-
-  const handleSave = () => {
-    const data = {
-      pumpName,
-      containerSize: Number(containerSize) || 0,
-    };
-    route.params?.onSubmit('Settings', data);
-    navigation.goBack();
-  };
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Pump Name</Text>
-      <TextInput
-        style={styles.inputBox}
-        value={pumpName}
-        onChangeText={setPumpName}
-        placeholder="Enter pump name"
-      />
-      <Text style={styles.label}>Container Size (ml)</Text>
-      <TextInput
-        style={styles.inputBox}
-        value={containerSize}
-        onChangeText={setContainerSize}
-        keyboardType="numeric"
-        placeholder="Enter container size"
-      />
-      <View style={styles.buttonContainer}>
-        <CuButton label='Save' onPress={handleSave} />
-        <CuButton label='Back' onPress={() => navigation.goBack()} />
-      </View>
-    </View>
+    <CuFormScreen
+      title="Settings"
+      fields={[
+        {
+          label: 'Pump Name',
+          key: 'pumpName',
+          placeholder: 'Enter pump name',
+          type: 'text',
+        },
+        {
+          label: 'Container Size (ml)',
+          key: 'containerSize',
+          placeholder: 'Enter container size',
+          type: 'numeric',
+        },
+      ]}
+      initialValues={{
+        pumpName: route.params?.pumpName || '',
+        containerSize:
+          route.params?.containerSize && route.params.containerSize !== 0
+            ? route.params.containerSize.toString()
+            : '',
+      }}
+      submitBtnLabel="Save"
+      onSubmit={(data) => {
+        route.params?.onSubmit('Settings', {
+          pumpName: data.pumpName,
+          containerSize: Number(data.containerSize) || 0,
+        });
+        navigation.goBack();
+      }}
+      onBack={() => navigation.goBack()}
+    />
   );
 };
+
 
 export default Settings;

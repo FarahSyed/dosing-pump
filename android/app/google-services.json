@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1007893302689",
+    "project_id": "dosingpump1",
+    "storage_bucket": "dosingpump1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007893302689:android:d352f30955b41a9a708fe0",
+        "android_client_info": {
+          "package_name": "com.dosingpump"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuQMrBrXWpyYCPu4-sJpd3PHEWXrg2J1s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
